@@ -2,6 +2,7 @@ import { InternalServerErrorException } from '@nestjs/common';
 import { HashRepository } from 'src/common/domain/repository/hash.repository';
 import { LoggerRepository } from 'src/common/domain/repository/logger.repository';
 import { UIDRepository } from 'src/common/domain/repository/uid.repository';
+import { UserDuplicatedError } from 'src/user/domain/error/user-duplicated.error';
 import { IUser } from 'src/user/domain/interface/user.interface';
 import { UserRepository } from 'src/user/domain/repository/user.repository';
 
@@ -17,6 +18,9 @@ export class SaveUserUsecase {
     try {
       if (!user.id) user.id = this.uidRepo.generate();
       this.loggerRepo.debug(xReqId, 'Saving user with data', user);
+
+      const checkUser = await this.userRepo.getByUsername(user.username);
+      if (checkUser) throw new UserDuplicatedError();
 
       user.password = this.hashRepo.hash(user.password);
 

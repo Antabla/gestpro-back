@@ -4,6 +4,7 @@ import { XReqUid } from 'src/common/infrastructure/decorator/x-req.uid.decorator
 import { AuthInterceptor } from 'src/common/infrastructure/interceptor/auth.interceptor';
 import { LoginUserUsecase } from 'src/user/application/login-user-usecase/login-user.usecase';
 import { SaveUserUsecase } from 'src/user/application/save-user-usecase/save-user.usecase';
+import { UserDuplicatedError } from 'src/user/domain/error/user-duplicated.error';
 import { UserInvalidError } from 'src/user/domain/error/user-invalid.error';
 import { UserNotFoundError } from 'src/user/domain/error/user-not-found.error';
 import { IUserWithToken } from 'src/user/domain/interface/user.interface';
@@ -24,7 +25,14 @@ export class UserController {
       return {
         status: HttpStatus.OK,
       };
-    } catch {
+    } catch (error) {
+      if (error instanceof UserDuplicatedError) {
+        return {
+          status: HttpStatus.CONFLICT,
+          message: 'Username already exists',
+        };
+      }
+
       return {
         status: HttpStatus.INTERNAL_SERVER_ERROR,
         message: 'Error saving user',

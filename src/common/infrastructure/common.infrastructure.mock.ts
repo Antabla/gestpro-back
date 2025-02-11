@@ -42,7 +42,7 @@ export class CommonMockInfrastructure {
         useValue: this.jwtRepo,
       },
       {
-        provide: HashMockAdapter,
+        provide: HashRepository,
         useValue: this.hashRepo,
       },
       {

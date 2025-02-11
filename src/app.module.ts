@@ -1,15 +1,17 @@
 import { Module } from '@nestjs/common';
-import { CommonMockInfrastructure } from './common/infrastructure/common.infrastructure.mock';
-import { ProjectMockInfrastructure } from './project/infrastructure/project.infrastructure.mock';
-import { UserMockInfrastructure } from './user/infrastructure/user.infrastructure.mock';
+import { CommonInfrastructure } from './common/infrastructure/common.infrastructure';
+import { UserInfrastructure } from './user/infrastructure/user.infrastructure';
 
 @Module({
   imports: [],
-  controllers: [...UserMockInfrastructure.controllers(), ...ProjectMockInfrastructure.controllers()],
+  controllers: [
+    ...UserInfrastructure.controllers(),
+    // ...ProjectInfrastructure.controllers()
+  ],
   providers: [
-    ...CommonMockInfrastructure.getInstance().providers(),
-    ...UserMockInfrastructure.getInstance(CommonMockInfrastructure.getInstance()).providers(),
-    ...ProjectMockInfrastructure.getInstance(CommonMockInfrastructure.getInstance()).providers(),
+    ...CommonInfrastructure.getInstance().providers(),
+    ...UserInfrastructure.getInstance(CommonInfrastructure.getInstance()).providers(),
+    // ...ProjectMockInfrastructure.getInstance(CommonMockInfrastructure.getInstance()).providers(),
   ],
 })
 export class AppModule {}
