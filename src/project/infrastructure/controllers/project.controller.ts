@@ -49,6 +49,7 @@ export class ProjectController {
       };
     }
   }
+
   @Get()
   @UseInterceptors(AuthInterceptor)
   async listProjects(@XReqUid() xReqUid: string, @Param('userId') userId: string): Promise<IResponse<IProject[]>> {
