@@ -23,7 +23,7 @@ export class AuthInterceptor implements NestInterceptor {
     try {
       const dataToken = this.jwtRepo.verify(token);
 
-      request.params['userI'] = (dataToken as IUser).id;
+      request.params['userId'] = (dataToken as IUser).id;
     } catch {
       const response: IResponse<null> = {
         status: 401,

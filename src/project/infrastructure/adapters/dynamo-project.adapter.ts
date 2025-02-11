@@ -33,7 +33,7 @@ export class DynamoProjectAdapter implements ProjectRepository {
   async save(project: IProject): Promise<void> {
     const params = {
       TableName: this.tableName,
-      Item: project,
+      Item: { ...project, ownerId: project.owner },
     };
 
     const command = new PutCommand(params);
@@ -43,9 +43,9 @@ export class DynamoProjectAdapter implements ProjectRepository {
   async list(userId: IUser['id']): Promise<IProject[]> {
     const params = {
       TableName: this.tableName,
-      FilterExpression: 'owner = :owner',
+      FilterExpression: 'ownerId = :ownerId',
       ExpressionAttributeValues: {
-        ':owner': userId,
+        ':ownerId': userId,
       },
     };
 
@@ -58,7 +58,7 @@ export class DynamoProjectAdapter implements ProjectRepository {
           id: item.id,
           name: item.name,
           description: item.description,
-          owner: item.owner,
+          owner: item.ownerId,
         }) as IProject,
     );
   }

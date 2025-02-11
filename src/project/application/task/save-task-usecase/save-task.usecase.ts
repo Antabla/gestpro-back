@@ -14,9 +14,9 @@ export class SaveTaskUsecase {
   async execute(xReqUid: string, task: ITask): Promise<void> {
     try {
       if (!task.id) task.id = this.uidRepo.generate();
-      this.logger.debug(xReqUid, 'Saving task with data ', task);
+      if (!task.status) task.status = EStatusTask.TODO;
 
-      task.status = EStatusTask.TODO;
+      this.logger.debug(xReqUid, 'Saving task with data ', task);
 
       await this.taskRepo.save(task);
     } catch (error) {

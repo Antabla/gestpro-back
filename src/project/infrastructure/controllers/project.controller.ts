@@ -126,7 +126,7 @@ export class ProjectController {
     }
   }
 
-  @Post()
+  @Post('tasks')
   @UseInterceptors(AuthInterceptor)
   async saveTask(@XReqUid() xReqUid: string, @Body('task') task: ITask): Promise<IResponse<null>> {
     try {

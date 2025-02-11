@@ -11,6 +11,6 @@ export class JwtMockAdapter implements JwtRepository {
       throw new Error('Invalid token');
     }
 
-    return { userId: 1 };
+    return { id: 1 };
   }
 }

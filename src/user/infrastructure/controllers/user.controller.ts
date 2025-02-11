@@ -1,7 +1,6 @@
-import { Body, Controller, HttpStatus, Post, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, HttpStatus, Post } from '@nestjs/common';
 import { IResponse } from 'src/common/domain/interface/response.interface';
 import { XReqUid } from 'src/common/infrastructure/decorator/x-req.uid.decorator';
-import { AuthInterceptor } from 'src/common/infrastructure/interceptor/auth.interceptor';
 import { LoginUserUsecase } from 'src/user/application/login-user-usecase/login-user.usecase';
 import { SaveUserUsecase } from 'src/user/application/save-user-usecase/save-user.usecase';
 import { UserDuplicatedError } from 'src/user/domain/error/user-duplicated.error';
@@ -18,7 +17,6 @@ export class UserController {
   ) {}
 
   @Post('')
-  @UseInterceptors(AuthInterceptor)
   async save(@XReqUid() xReqUid: string, @Body('user') user: UserDto): Promise<IResponse<null>> {
     try {
       await this.saveUserUsecase.execute(xReqUid, user);
