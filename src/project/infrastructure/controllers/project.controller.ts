@@ -1,5 +1,4 @@
 import { Body, Controller, Delete, Get, HttpStatus, Param, Post, UseInterceptors } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
 import { IResponse } from 'src/common/domain/interface/response.interface';
 import { XReqUid } from 'src/common/infrastructure/decorator/x-req.uid.decorator';
 import { AuthInterceptor } from 'src/common/infrastructure/interceptor/auth.interceptor';
@@ -14,7 +13,6 @@ import { ProjectsUserNotFoundError } from 'src/project/domain/error/projects-use
 import { IProject } from 'src/project/domain/interface/project.interface';
 import { ITask } from 'src/project/domain/interface/task.interface';
 
-@ApiTags('project')
 @Controller('projects')
 export class ProjectController {
   constructor(

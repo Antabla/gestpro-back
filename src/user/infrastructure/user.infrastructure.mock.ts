@@ -16,18 +16,9 @@ export class UserMockInfrastructure {
   private constructor(common: CommonMockInfrastructure) {
     this.userRepo = new InMemoryUserAdapter();
 
-    this.loginUserUsecase = new LoginUserUsecase(
-      common.loggerRepo,
-      common.hashRepo,
-      common.jwtRepo,
-      this.userRepo,
-    );
+    this.loginUserUsecase = new LoginUserUsecase(common.loggerRepo, common.hashRepo, common.jwtRepo, this.userRepo);
 
-    this.saveUserUsecase = new SaveUserUsecase(
-      common.loggerRepo,
-      common.hashRepo,
-      this.userRepo,
-    );
+    this.saveUserUsecase = new SaveUserUsecase(common.loggerRepo, common.hashRepo, this.userRepo, common.uIdRepo);
   }
 
   static getInstance(common: CommonMockInfrastructure): UserMockInfrastructure {

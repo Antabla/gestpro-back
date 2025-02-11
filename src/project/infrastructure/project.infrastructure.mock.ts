@@ -32,11 +32,11 @@ export class ProjectMockInfrastructure {
 
     this.deleteProjectUsecase = new DeleteProjectUsecase(common.loggerRepo, this.projectRepo);
     this.listProjectUsecase = new ListProjectsUsecase(common.loggerRepo, this.projectRepo);
-    this.saveProjectUsecase = new SaveProjectUsecase(common.loggerRepo, this.projectRepo);
+    this.saveProjectUsecase = new SaveProjectUsecase(common.loggerRepo, this.projectRepo, common.uIdRepo);
 
     this.deleteTaskUsecase = new DeleteTaskUsecase(common.loggerRepo, this.taskRepo);
     this.listTaskUsecase = new ListTasksUsecase(common.loggerRepo, this.taskRepo);
-    this.saveTaskUsecase = new SaveTaskUsecase(common.loggerRepo, this.taskRepo);
+    this.saveTaskUsecase = new SaveTaskUsecase(common.loggerRepo, this.taskRepo, common.uIdRepo);
   }
 
   static getInstance(common: CommonMockInfrastructure): ProjectMockInfrastructure {

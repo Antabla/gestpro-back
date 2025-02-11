@@ -1,7 +1,7 @@
 import { ERole } from '../enum/role.enum';
 
 export interface IUser {
-  id: string;
+  id?: string;
   username: string;
   password: string;
   role: ERole;

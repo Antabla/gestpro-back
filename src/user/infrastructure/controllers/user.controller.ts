@@ -1,5 +1,4 @@
 import { Body, Controller, HttpStatus, Post, UseInterceptors } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
 import { IResponse } from 'src/common/domain/interface/response.interface';
 import { XReqUid } from 'src/common/infrastructure/decorator/x-req.uid.decorator';
 import { AuthInterceptor } from 'src/common/infrastructure/interceptor/auth.interceptor';
@@ -7,9 +6,9 @@ import { LoginUserUsecase } from 'src/user/application/login-user-usecase/login-
 import { SaveUserUsecase } from 'src/user/application/save-user-usecase/save-user.usecase';
 import { UserInvalidError } from 'src/user/domain/error/user-invalid.error';
 import { UserNotFoundError } from 'src/user/domain/error/user-not-found.error';
-import { IUser, IUserWithToken } from 'src/user/domain/interface/user.interface';
+import { IUserWithToken } from 'src/user/domain/interface/user.interface';
+import { UserDto } from './user.dto';
 
-@ApiTags('user')
 @Controller('users')
 export class UserController {
   constructor(
@@ -19,7 +18,7 @@ export class UserController {
 
   @Post('')
   @UseInterceptors(AuthInterceptor)
-  async save(@XReqUid() xReqUid: string, @Body('user') user: IUser): Promise<IResponse<null>> {
+  async save(@XReqUid() xReqUid: string, @Body('user') user: UserDto): Promise<IResponse<null>> {
     try {
       await this.saveUserUsecase.execute(xReqUid, user);
       return {
@@ -37,7 +36,7 @@ export class UserController {
   async login(
     @XReqUid() xReqUid: string,
     @Body('username') username: string,
-    @Body('passwordI') password: string,
+    @Body('password') password: string,
   ): Promise<IResponse<IUserWithToken>> {
     try {
       const userWithToken = await this.loginUserUsecase.execute(xReqUid, username, password);
